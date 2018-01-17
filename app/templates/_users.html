@@ -1,0 +1,26 @@
+<ul class="posts">
+    {#            <a href="{{ url_for('.post', id=post.id) }}">#}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>User full performance</th>
+                <th>Reserved performance</th>
+                <th>Task assigned</th>
+            </tr>
+            </thead>
+            {% for user in users %}
+                <tbody>
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.performance_story_points }}</td>
+                    <td>{{ user.followed_tasks_pts()}}</td>
+                    <td>{{ user.followed.count() }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</ul>
+

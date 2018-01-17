@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}TaskBoard | Task Moderation{% endblock %}
+
+{% block page_content %}
+<div class="">
+    <h1>Tasks Moderation</h1>
+</div>
+{% set moderate = True %}
+{% include '_tasks.html' %}
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.moderate') }}
+</div>
+{% endif %}
+{% endblock %}

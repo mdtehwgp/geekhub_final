@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block title %}TaskBoard{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>Hello,
+            {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}username{% endif %}!
+        </h1>
+
+        {% if current_user.is_authenticated and current_user.can(Permission.MODERATE_COMMENTS) %}
+            <button type="button" class="popup-button btn btn-primary">Add task</button>
+        {% endif %}
+
+{#        {% if current_user.is_authenticated and current_user.can(Permission.MODERATE_COMMENTS) %}#}
+{#            <button type="button" class="btn">Distribute tasks</button>#}
+{#        {% endif %}#}
+
+    </div>
+    <div class="popup-form">
+        {% if current_user.can(Permission.MODERATE_COMMENTS) %}
+            {{ wtf.quick_form(form) }}
+        {% endif %}
+    </div>
+    <div class="post-tabs">
+        <ul class="nav nav-tabs">
+            <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">All tasks</a>
+            </li>
+            {% if current_user.is_authenticated %}
+                <li{% if show_followed %} class="active"{% endif %}><a
+                        href="{{ url_for('.show_followed') }}">Accepted tasks</a></li>
+            {% endif %}
+        </ul>
+        {% include '_tasks.html' %}
+    </div>
+    {% if pagination %}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, '.index') }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
+{% endblock %}

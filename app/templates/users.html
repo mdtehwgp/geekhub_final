@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}TaskBoard | Users{% endblock %}
+
+{% block page_content %}
+    <div class="">
+        <h1>Users</h1>
+    </div>
+    {% set moderate = True %}
+    {% include '_users.html' %}
+    {% if pagination %}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, '.users') }}
+        </div>
+
+    {% endif %}
+{% endblock %}
